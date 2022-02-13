@@ -85,7 +85,7 @@ namespace eval {
     }
 
     //% block
-    export function evalArrayMath(array3: any[]): string[] {
+    export function evalArrayMath(array3: any[]): number {
 
         out_array_2 = collapseArrayDigitsToNums(cloneArray(array3))
         while (lowest_positive_number(out_array_2.indexOf("/"), out_array_2.indexOf("*")) >= 0) {
@@ -94,7 +94,7 @@ namespace eval {
         while (lowest_positive_number(out_array_2.indexOf("-"), out_array_2.indexOf("+")) >= 0) {
             out_array_2 = evalArraySymbolIndex(out_array_2, lowest_positive_number(out_array_2.indexOf("-"), out_array_2.indexOf("+")))
         }
-        return out_array_2
+        return parseFloat(out_array_2.shift())
     }
 
     let out_array_2: string[] = []
