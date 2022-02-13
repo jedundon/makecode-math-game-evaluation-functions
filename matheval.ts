@@ -87,7 +87,7 @@ namespace eval {
     //% block
     export function evalArrayMath(array3: any[]): string[] {
 
-        out_array_2 = cloneArray(array3)
+        out_array_2 = collapseArrayDigitsToNums(cloneArray(array3))
         while (lowest_positive_number(out_array_2.indexOf("/"), out_array_2.indexOf("*")) >= 0) {
             out_array_2 = evalArraySymbolIndex(out_array_2, lowest_positive_number(out_array_2.indexOf("/"), out_array_2.indexOf("*")))
         }
