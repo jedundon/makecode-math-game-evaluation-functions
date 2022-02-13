@@ -1,3 +1,33 @@
+def collapseArrayDigitsToNums(array: List[any]):
+    global t_string, t_array
+    t_string = ""
+    t_array = []
+    index = 0
+    while index <= len(array) - 1:
+        if symbols.index(array[index]) >= 0:
+            if not (t_string.is_empty()):
+                t_array.append(t_string)
+                t_string = ""
+            t_array.append(array[index])
+        else:
+            t_string = "" + t_string + convert_to_text(array[index])
+        index += 1
+    if not (t_string.is_empty()):
+        t_array.append(t_string)
+        t_string = ""
+    return t_array
+def evalArraySymbolIndex(arr: List[any], symindex: number):
+    global in_array, out_array
+    in_array = cloneArray(arr)
+    out_array = []
+    index2 = 0
+    while index2 <= symindex - 2:
+        out_array.append(in_array.shift())
+        index2 += 1
+    out_array.append(convert_to_text(evaluateMath(in_array.shift(), in_array.shift(), in_array.shift())))
+    for value in in_array:
+        out_array.append(value)
+    return out_array
 def evaluateMath(n1: str, s1: str, n2: str):
     if s1 == "/":
         return parse_float(n1) / parse_float(n2)
@@ -16,107 +46,29 @@ def lowest_positive_number(a: number, b: number):
         return -1
     else:
         return min(a, b)
-symbols: List[str] = []
-temp_string = ""
-temp_array: List[any] = []
-output_array: List[any] = []
-num1 = ""
-s = ""
-num2 = ""
-clone: List[any] = []
-def collapseArrayDigitsToNumbers3(array: List[any]):
-    global temp_string, temp_array
-    temp_string = ""
-    temp_array = []
-    index2 = 0
-    while index2 <= len(array) - 1:
-        if symbols.index(array[index2]) >= 0:
-            if not (temp_string.is_empty()):
-                temp_array.append(temp_string)
-                temp_string = ""
-            temp_array.append(array[index2])
-        else:
-            temp_string = "" + temp_string + convert_to_text(array[index2])
-        index2 += 1
-    if not (temp_string.is_empty()):
-        temp_array.append(temp_string)
-        temp_string = ""
-    return temp_array
-def collapseArrayDigitsToNumbers2(array2: List[any]):
-    global temp_string, temp_array
-    temp_string = ""
-    temp_array = []
-    index22 = 0
-    while index22 <= len(array2) - 1:
-        if symbols.index(array2[index22]) >= 0:
-            if not (temp_string.is_empty()):
-                temp_array.append(temp_string)
-                temp_string = ""
-            temp_array.append(array2[index22])
-        else:
-            temp_string = "" + temp_string + convert_to_text(array2[index22])
-        index22 += 1
-    if not (temp_string.is_empty()):
-        temp_array.append(temp_string)
-        temp_string = ""
-    return temp_array
-def collapseArrayDigitsToNumbers(array3: List[any]):
-    global temp_string, temp_array
-    temp_string = ""
-    temp_array = []
-    index222 = 0
-    while index222 <= len(array3) - 1:
-        if symbols.index(array3[index222]) >= 0:
-            if not (temp_string.is_empty()):
-                temp_array.append(temp_string)
-                temp_string = ""
-            temp_array.append(array3[index222])
-        else:
-            temp_string = "" + temp_string + convert_to_text(array3[index222])
-        index222 += 1
-    if not (temp_string.is_empty()):
-        temp_array.append(temp_string)
-        temp_string = ""
-    return temp_array
-def evaluateArraySymbolIndex(arr: List[any], symindex: number):
-    global output_array, temp_array, num1, s, num2
-    output_array = cloneArray(arr)
-    temp_array = []
-    index2222 = 0
-    while index2222 <= symindex - 2:
-        temp_array.append(output_array.shift())
-        index2222 += 1
-    num1 = output_array.shift()
-    s = output_array.shift()
-    num2 = output_array.shift()
-    temp_array.append(convert_to_text(evaluateMath(num1, s, num2)))
-    for value in output_array:
-        temp_array.append(value)
-    return temp_array
-def convertArrayToString(array4: List[any]):
-    global temp_string
-    temp_string = ""
-    index3 = 0
-    while index3 <= len(array4) - 1:
-        temp_string = "" + temp_string + convert_to_text(array4[index3])
-        index3 += 1
-    return temp_string
-def evaluateArrayMath(array5: List[any]):
-    global output_array
-    output_array = cloneArray(array5)
-    while lowest_positive_number(output_array.index("/"), output_array.index("*")) >= 0:
-        output_array = evaluateArraySymbolIndex(output_array,
-            lowest_positive_number(output_array.index("/"), output_array.index("*")))
-    while lowest_positive_number(output_array.index("-"), output_array.index("+")) >= 0:
-        output_array = evaluateArraySymbolIndex(output_array,
-            lowest_positive_number(output_array.index("/"), output_array.index("*")))
-    return output_array
-def cloneArray(array6: List[any]):
+def cloneArray(array2: List[any]):
     global clone
     clone = []
-    for value2 in array6:
+    for value2 in array2:
         clone.append(value2)
     return clone
+def evalArrayMath(array3: List[any]):
+    global out_array_2
+    out_array_2 = cloneArray(array3)
+    while lowest_positive_number(out_array_2.index("/"), out_array_2.index("*")) >= 0:
+        out_array_2 = evalArraySymbolIndex(out_array_2,
+            lowest_positive_number(out_array_2.index("/"), out_array_2.index("*")))
+    while lowest_positive_number(out_array_2.index("-"), out_array_2.index("+")) >= 0:
+        out_array_2 = evalArraySymbolIndex(out_array_2,
+            lowest_positive_number(out_array_2.index("-"), out_array_2.index("+")))
+    return out_array_2
+out_array_2: List[str] = []
+clone: List[str] = []
+out_array: List[str] = []
+in_array: List[str] = []
+t_array: List[str] = []
+t_string = ""
+symbols: List[str] = []
 symbols = ["/", "*", "-", "+"]
-text_list = ["4", "+", "4", "-", "2", "4", "/", "4", "*", "1", "0", "0"]
-game.splash(evaluateArrayMath(collapseArrayDigitsToNumbers(text_list)))
+text_list = ["6", "+", "4", "-", "2", "4", "/", "4", "*", "1", "0"]
+game.splash(evalArrayMath(collapseArrayDigitsToNums(text_list)))
